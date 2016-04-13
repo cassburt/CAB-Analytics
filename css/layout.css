@@ -1,4 +1,5 @@
 div.title {text-align: center;}
+#chartContainer {height: 300px; width: 100%;}
 #begin {text-align: center;}
 #start {display: block; margin: 0 auto;}
 #agree {display: block; margin: 0 auto;}
@@ -8,6 +9,5 @@ div.title {text-align: center;}
 div.spacer {height: 20px; margin-left: -8px; margin-right: -8px;}
 #imageSpace {margin: 0 auto; position: relative; text-align: center;}
 /*img.product {max-height: 300px; max-width: auto;}*/
-div.imageBox { display: inline-flex; width: 30%; max-height: 322px; justify-content: center; margin-left: 5px; margin-right: 5px; overflow: hidden;}
-div.imageBox2 { display: inline-flex; width: 30%; max-height: 300px; max-width: 320px; justify-content: center; margin-left: 5px; margin-right: 5px; overflow: hidden;}
-img.product {max-height: 300px; max-width: auto;}
+div.imageBox { display: inline-flex; width: 30%; max-height: 320px; justify-content: center; margin-left: 5px; margin-right: 5px; overflow: hidden;}
+/*img.product {max-height: 300px; max-width: auto;}*/

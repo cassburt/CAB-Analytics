@@ -11,169 +11,117 @@ var products = [];
 products.push(babySwiffer = new Product('Baby Swiffer', 'img/baby_swiffer.jpg', 'make child labor work for you!'));
 products.push(balancingChair = new Product('Balancing Chair', 'img/balancing_chair.jpg', 'make that guy in your office who sits on a ball really jealous!'));
 products.push(wineGlass = new Product('Wine Glass', 'img/wine_glass.jpg', 'get drunk'));
+products.push(bananaSlicer = new Product('Banana Slicer', 'img/banana_slicer.jpg', 'tbd'));
+products.push(bootCovers = new Product('Boot Covers', 'img/boot_covers.jpg', 'tbd'));
+products.push(cthulhuToy = new Product('Cthulhu Toy', 'img/cthulhu_toy.jpg', 'tbd'));
+products.push(dragonMeat = new Product('Dragon Meat', 'img/dragon_meat.jpg', 'tbd'));
+products.push(penCutlery = new Product('Pen Cutlery', 'img/pen_cutlery.jpg', 'tbd'));
+products.push(pizzaScissors = new Product('Pizza Scissors', 'img/pizza_scissors.jpg', 'tbd'));
+products.push(r2d2Bag = new Product('R2D2 Bag', 'img/r2d2_bag.jpg', 'tbd'));
+products.push(sharkSleepingBag = new Product('Shark Sleeping Bag', 'img/shark_sleeping_bag.jpg', 'tbd'));
+products.push(squidUsb = new Product('Squid USB', 'img/squid_usb.jpg', 'tbd'));
+products.push(unicornMeat = new Product('Unicorn Meat', 'img/unicorn_meat.jpg', 'tbd'));
+products.push(waterCan = new Product('Water Can', 'img/water_can.jpg', 'tbd'));
 
 //create random numbers
 function getRandom() {
-  return Math.floor(Math.random()*products.length);
+  return Math.floor(Math.random()* products.length);
 };
+
+//Generate random number
+var leftie = getRandom();
+var central = getRandom();
+var rightie = getRandom();
 
 //vote counter
 function voteCounter(thing) {
   var addVote = thing.voteCount++;
-}
+};
 
-//create images list
+//images list
 var photos = products.map(function(o) {return o.photo;});
 
-//Inform user and gain consent
-document.getElementById('start').addEventListener('click', function() {
-  //Provide instructions
-  document.getElementById('begin').innerHTML = "<h2>Instructions</h2><p -d=\"instruction\">Click the \"Agree\" button below to begin the survey. Pictures and descriptions for three GoFundYourself products will appear. Click on the image of the GoFundYourself product that interests you the most. Complete all 15 questions for a chance to win up to $5,000 in GoFundYourself seed money.</p>";
+//Populate webpage
+function populate() {
 
-  //Remove Start button
-  var parent = document.getElementById('buttonSpace');
-  var child = document.getElementById('start');
+  //Add image buttons
+  var leftButton = document.createElement('input');
+  leftButton.type = "image";
+  leftButton.id = "leftImage";
+  leftButton.src = photos[leftie];
+  var node = document.createTextNode;
+  var element = document.getElementById('boxLeft');
+
+  element.appendChild(leftButton);
+  var centerButton = document.createElement('input');
+  centerButton.type = "image";
+  centerButton.id = "centerImage";
+  centerButton.src = photos[central];
+  var node = document.createTextNode;
+  var element = document.getElementById('boxCenter');
+  element.appendChild(centerButton);
+
+  var rightButton = document.createElement('input');
+  rightButton.type = "image";
+  rightButton.id = "rightImage";
+  rightButton.src = photos[rightie];
+  var node = document.createTextNode;
+  var element = document.getElementById('boxRight');
+  element.appendChild(rightButton);
+}
+
+//Remove Images and reset randoms
+function removeImages() {
+  var parent = document.getElementById('boxLeft');
+  var child = document.getElementById('leftImage');
   parent.removeChild(child);
 
-  //Add Agree button
-  var agree = document.createElement('button');
-  agree.id = "agree";
-  var node = document.createTextNode('I Agree');
-  agree.appendChild(node);
-  var element = document.getElementById('buttonSpace');
-  element.appendChild(agree);
+  var parent = document.getElementById('boxCenter');
+  var child = document.getElementById('centerImage');
+  parent.removeChild(child);
 
-  //Begin the survey
+  var parent = document.getElementById('boxRight');
+  var child = document.getElementById('rightImage');
+  parent.removeChild(child);
 
-  document.getElementById('agree').addEventListener('click', function() {
-    var leftie = getRandom();
-    var central = getRandom();
-    var rightie = getRandom();
+  leftie = getRandom();
+  central = getRandom();
+  rightie = getRandom();
+}
 
-    //Remove Agree button
-    var parent = document.getElementById('buttonSpace');
-    var child = document.getElementById('agree');
-    parent.removeChild(child);
 
-    //for (var i=0; i<15; i++) {
-      //Create image inputs
-      var leftButton = document.createElement('input');
-      leftButton.type = "image";
-      leftButton.id = "leftImage";
-      leftButton.src = photos[leftie];
-      var node = document.createTextNode;
-      var element = document.getElementById('boxLeft');
-      element.appendChild(leftButton);
+window.onload= function() {
+populate();
+chart = new CanvasJS.Chart("chartContainer", {
+    title: {text: "Clicks Per Photo"},
+    data: [
+            {
+             type: "bar",
+             dataPoints: products
+            }
+          ]
+   });
+   chart.render();
+}
 
-      var centerButton = document.createElement('input');
-      centerButton.type = "image";
-      centerButton.id = "centerImage";
-      centerButton.src = photos[central];
-      var node = document.createTextNode;
-      var element = document.getElementById('boxCenter');
-      element.appendChild(centerButton);
-
-      var rightButton = document.createElement('input');
-      rightButton.type = "image";
-      rightButton.id = "rightImage";
-      rightButton.src = photos[rightie];
-      var node = document.createTextNode;
-      var element = document.getElementById('boxRight');
-      element.appendChild(rightButton);
-
-      //Left button actions
-      document.getElementById('leftImage').addEventListener('click', function() {
-        voteCounter(products[leftie]);
-
-        //Remove image buttons
-      /*  var parent = document.getElementById('ImageSpace');
-        var child = document.getElementById('leftImage');
-        parent.removeChild(child);
-
-        var parent = document.getElementById('ImageSpace');
-        var child = document.getElementById('centerImage');
-        parent.removeChild(child);
-
-        var parent = document.getElementById('ImageSpace');
-        var child = document.getElementById('rightImage');
-        parent.removeChild(child);
-
-        //Create new random values
-        var leftie = getRandom();
-        var central = getRandom();
-        var rightie = getRandom();
-      });*/
-
-      //Center button actions
-    /*  document.getElementById('centerImage').addEventListener('click', function() {
-        voteCounter(products[central]);
-
-        //Remove image buttons
-        var parent = document.getElementById('ImageSpace');
-        var child = document.getElementById('leftImage');
-        parent.removeChild(child);
-
-        var parent = document.getElementById('ImageSpace');
-        var child = document.getElementById('centerImage');
-        parent.removeChild(child);
-
-        var parent = document.getElementById('ImageSpace');
-        var child = document.getElementById('rightImage');
-        parent.removeChild(child);
-
-        //Create new random values
-        var leftie = getRandom();
-        var central = getRandom();
-        var rightie = getRandom();
-      });
-
-      //Right button actions
-      document.getElementById('rightImage').addEventListener('click', function() {
-        voteCounter(products[rightie]);
-
-        //Remove image buttons
-        var parent = document.getElementById('ImageSpace');
-        var child = document.getElementById('leftImage');
-        parent.removeChild(child);
-
-        var parent = document.getElementById('ImageSpace');
-        var child = document.getElementById('centerImage');
-        parent.removeChild(child);
-
-        var parent = document.getElementById('ImageSpace');
-        var child = document.getElementById('rightImage');
-        parent.removeChild(child);
-
-        //Create new random values
-        var leftie = getRandom();
-        var central = getRandom();
-        var rightie = getRandom();*/
-    });
-//  }
+//Button functions
+  document.getElementById('boxLeft').addEventListener('click', function() {
+    voteCounter(products[leftie]);
+    removeImages();
+    populate();
   });
-});
+  document.getElementById('boxCenter').addEventListener('click', function() {
+    voteCounter(products[central]);
+    removeImages();
+    populate();
+  });
+  document.getElementById('boxRight').addEventListener('click', function() {
+    voteCounter(products[rightie]);
+    removeImages();
+    populate();
+  });
 
-
-
-
-
-
-
-
-
-
-
-
-
-//Survey Go
-//var randomImage = imageArray[Math.floor(Math.random() * products.length)];
-//var elRandomImage = document.getElementById("boxLeft");
-
-
-//return.Math.floor(Math.random() * photosArray.length);
-
-
-
-/*var msgChange = "Howdy!";
-var elmsgChange = document.getElementById('opener');
-elmsgChange.textContent = msgChange;*/
+  function chartChange() {
+  products[11].y++;
+  chart.render();
+}
