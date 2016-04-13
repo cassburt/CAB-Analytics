@@ -3,9 +3,9 @@ div.title {text-align: center;}
 #begin {text-align: center;}
 #start {display: block; margin: 0 auto;}
 #agree {display: block; margin: 0 auto;}
-#leftImage {width: 100%;}
-#centerImage {width: 100%;}
-#rightImage {width: 100%;}
+#leftImage {max-width: 464px;}
+#centerImage {max-width: 464px;}
+#rightImage {max-width: 464px;}
 div.spacer {height: 20px; margin-left: -8px; margin-right: -8px;}
 #imageSpace {margin: 0 auto; position: relative; text-align: center;}
 /*img.product {max-height: 300px; max-width: auto;}*/

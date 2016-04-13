@@ -23,26 +23,32 @@ products.push(squidUsb = new Product('Squid USB', 'img/squid_usb.jpg', 'tbd'));
 products.push(unicornMeat = new Product('Unicorn Meat', 'img/unicorn_meat.jpg', 'tbd'));
 products.push(waterCan = new Product('Water Can', 'img/water_can.jpg', 'tbd'));
 
-//create random numbers
+//Generate a random #
 function getRandom() {
-  return Math.floor(Math.random()* products.length);
+return Math.floor(Math.random()* productsCopy.length);
 };
 
-//Generate random number
-var leftie = getRandom();
-var central = getRandom();
-var rightie = getRandom();
-
-//vote counter
-function voteCounter(thing) {
-  var addVote = thing.voteCount++;
-};
-
-//images list
-var photos = products.map(function(o) {return o.photo;});
+//Make a copy of my products array
+productsCopy = [];
+function copyMe() {
+  for (i=0; i < products.length; i++) {
+    productsCopy.push(products[i]);
+  }
+}
 
 //Populate webpage
 function populate() {
+
+  //Generate random numbers
+  var leftie = getRandom();
+  var central = getRandom();
+  var rightie = getRandom();
+
+  //splice the array
+  spliceCopy();
+
+  //map the array
+  var photos = productsCopy.map(function(i) {return i.photo})
 
   //Add image buttons
   var leftButton = document.createElement('input');
@@ -70,8 +76,23 @@ function populate() {
   element.appendChild(rightButton);
 }
 
+//Remove random item from productsCopy
+function spliceCopy() {
+  var i = Math.floor(Math.random()* productsCopy.length);
+  var removed = productsCopy.splice(i, 1);
+};
+
+//Vote counter
+function countVotes(thing) {
+  var addVote = thing.voteCount++;
+};
+
+function assignPhoto(thing) {
+  return thing.photo;
+};
+
 //Remove Images and reset randoms
-function removeImages() {
+function removeReset() {
   var parent = document.getElementById('boxLeft');
   var child = document.getElementById('leftImage');
   parent.removeChild(child);
@@ -89,9 +110,9 @@ function removeImages() {
   rightie = getRandom();
 }
 
-
 window.onload= function() {
 populate();
+copyMe();
 chart = new CanvasJS.Chart("chartContainer", {
     title: {text: "Clicks Per Photo"},
     data: [
@@ -106,18 +127,18 @@ chart = new CanvasJS.Chart("chartContainer", {
 
 //Button functions
   document.getElementById('boxLeft').addEventListener('click', function() {
-    voteCounter(products[leftie]);
-    removeImages();
+    countVotes(products[leftie]);
+    removeReset();
     populate();
   });
   document.getElementById('boxCenter').addEventListener('click', function() {
     voteCounter(products[central]);
-    removeImages();
+    removeReset();
     populate();
   });
   document.getElementById('boxRight').addEventListener('click', function() {
     voteCounter(products[rightie]);
-    removeImages();
+    removeReset();
     populate();
   });
 
