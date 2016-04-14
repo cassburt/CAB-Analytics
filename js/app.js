@@ -23,15 +23,20 @@ products.push(squidUsb = new Product('Squid USB', 'img/squid_usb.jpg', 'tbd'));
 products.push(unicornMeat = new Product('Unicorn Meat', 'img/unicorn_meat.jpg', 'tbd'));
 products.push(waterCan = new Product('Water Can', 'img/water_can.jpg', 'tbd'));
 
+//create array copy
+productsCopy = [];
+function makeCopy() {
+  for (i=0; i< products.length; i++) {
+    productCopy.push(products[i]);
+  }
+}
+
+
 //create random numbers
 function getRandom() {
   return Math.floor(Math.random()* products.length);
 };
 
-//Generate random number
-var leftie = getRandom();
-var central = getRandom();
-var rightie = getRandom();
 
 //vote counter
 function voteCounter(thing) {
@@ -43,6 +48,11 @@ var photos = products.map(function(o) {return o.photo;});
 
 //Populate webpage
 function populate() {
+
+  //Generate random number variables
+  var leftie = getRandom();
+  var central = getRandom();
+  var rightie = getRandom();
 
   //Add image buttons
   var leftButton = document.createElement('input');
