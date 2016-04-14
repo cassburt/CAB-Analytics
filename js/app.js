@@ -28,6 +28,9 @@ products.push(waterCan = new Product('Water Can', 'img/water_can.jpg', 'tbd'));
 //Creates a copy of Products array named productsCopy
 var productsCopy = [];
 
+//Creates an object to collect total vote counts
+var surveyTotals = 0;
+
 //Can populate the productsCopy array
 function makeCopy() {
   for (i=0; i< products.length; i++) {
@@ -42,6 +45,24 @@ function refill() {
     }
   }
 
+//Can stop the game at 15 votes
+function playGame() {
+  if (surveyTotals == 15) {
+    endGame();
+  }
+  else {
+    populate();
+  }
+}
+
+//Can display the end message
+function endGame() {
+  var elSectionTitle = document.getElementById('sectionTitle');
+  elSectionTitle.innerHTML = 'Thank You!'
+  var elInstruction = document.getElementById('instruction');
+  elInstruction.innerHTML = 'Your input is greatly appreciated, fleshy one! Now go away.'
+}
+
 //Can create random numbers based on an array's length
 function getRandom(array) {
   return Math.floor(Math.random()* array.length);
@@ -50,6 +71,7 @@ function getRandom(array) {
 //Can add a vote to an array object, property "voteCount"
 function voteCounter(object) {
   var addVote = object.voteCount++;
+  var addMeToo = surveyTotals++;
 };
 
 //Can splice an array based on the random number generator
@@ -122,19 +144,19 @@ document.getElementById('boxLeft').addEventListener('click', function() {
   voteCounter(leftie);
   removeImages();
   restoreRandoms();
-  populate();
+  playGame();
   });
 document.getElementById('boxCenter').addEventListener('click', function() {
   voteCounter(central);
   removeImages();
   restoreRandoms();
-  populate();
+  playGame();
 });
 document.getElementById('boxRight').addEventListener('click', function() {
   voteCounter(rightie);
   removeImages();
   restoreRandoms();
-  populate();
+  playGame();
 });
 
 window.onload= function() {
