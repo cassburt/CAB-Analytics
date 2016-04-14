@@ -1,4 +1,4 @@
-// Product object costructor
+//Builds objecct constructor
 var Product = function(product_name, photo, product_description) {
   this.productName = product_name;
   this.photo = photo;
@@ -6,8 +6,10 @@ var Product = function(product_name, photo, product_description) {
   this.voteCount = 0;
 }
 
-//Create and populate product array
+//Builds populate products array
 var products = [];
+
+//Populates products array
 products.push(babySwiffer = new Product('Baby Swiffer', 'img/baby_swiffer.jpg', 'make child labor work for you!'));
 products.push(balancingChair = new Product('Balancing Chair', 'img/balancing_chair.jpg', 'make that guy in your office who sits on a ball really jealous!'));
 products.push(wineGlass = new Product('Wine Glass', 'img/wine_glass.jpg', 'get drunk'));
@@ -23,64 +25,76 @@ products.push(squidUsb = new Product('Squid USB', 'img/squid_usb.jpg', 'tbd'));
 products.push(unicornMeat = new Product('Unicorn Meat', 'img/unicorn_meat.jpg', 'tbd'));
 products.push(waterCan = new Product('Water Can', 'img/water_can.jpg', 'tbd'));
 
-//create array copy
-productsCopy = [];
+//Creates a copy of Products array named productsCopy
+var productsCopy = [];
+
+//Can populate the productsCopy array
 function makeCopy() {
   for (i=0; i< products.length; i++) {
-    productCopy.push(products[i]);
+    productsCopy.push(products[i]);
   }
 }
 
+//Can refill the productsCopy array IF it is empty
+function refill() {
+    if (productsCopy.length == 0) {
+     makeCopy();
+    }
+  }
 
-//create random numbers
-function getRandom() {
-  return Math.floor(Math.random()* products.length);
+//Can create random numbers based on an array's length
+function getRandom(array) {
+  return Math.floor(Math.random()* array.length);
 };
 
-
-//vote counter
-function voteCounter(thing) {
-  var addVote = thing.voteCount++;
+//Can add a vote to an array object, property "voteCount"
+function voteCounter(object) {
+  var addVote = object.voteCount++;
 };
 
-//images list
-var photos = products.map(function(o) {return o.photo;});
+//Can splice an array based on the random number generator
+function splicer(array) {
+  refill();
+  var randomNumber = getRandom(array);
+  var arrayObject = array.splice(randomNumber, 1)[0];
+  return arrayObject;
+}
 
-//Populate webpage
+//Generates random number variables
+var leftie = splicer(productsCopy);
+var central = splicer(productsCopy);
+var rightie = splicer(productsCopy);
+
+//Can populate the webpage
 function populate() {
-
-  //Generate random number variables
-  var leftie = getRandom();
-  var central = getRandom();
-  var rightie = getRandom();
 
   //Add image buttons
   var leftButton = document.createElement('input');
-  leftButton.type = "image";
-  leftButton.id = "leftImage";
-  leftButton.src = photos[leftie];
+    leftButton.type = "image";
+    leftButton.id = "leftImage";
+    leftButton.src = leftie.photo;
   var node = document.createTextNode;
   var element = document.getElementById('boxLeft');
+    element.appendChild(leftButton);
 
-  element.appendChild(leftButton);
   var centerButton = document.createElement('input');
-  centerButton.type = "image";
-  centerButton.id = "centerImage";
-  centerButton.src = photos[central];
+    centerButton.type = "image";
+    centerButton.id = "centerImage";
+    centerButton.src = central.photo;
   var node = document.createTextNode;
   var element = document.getElementById('boxCenter');
-  element.appendChild(centerButton);
+    element.appendChild(centerButton);
 
   var rightButton = document.createElement('input');
-  rightButton.type = "image";
-  rightButton.id = "rightImage";
-  rightButton.src = photos[rightie];
+    rightButton.type = "image";
+    rightButton.id = "rightImage";
+    rightButton.src = rightie.photo;
   var node = document.createTextNode;
   var element = document.getElementById('boxRight');
-  element.appendChild(rightButton);
+    element.appendChild(rightButton);
 }
 
-//Remove Images and reset randoms
+//Can remove Images
 function removeImages() {
   var parent = document.getElementById('boxLeft');
   var child = document.getElementById('leftImage');
@@ -94,13 +108,37 @@ function removeImages() {
   var child = document.getElementById('rightImage');
   parent.removeChild(child);
 
-  leftie = getRandom();
-  central = getRandom();
-  rightie = getRandom();
 }
 
+//Can restore the random numbers
+function restoreRandoms() {
+  leftie = splicer(productsCopy);
+  central = splicer(productsCopy);
+  rightie = splicer(productsCopy);
+}
+
+//Button functions
+document.getElementById('boxLeft').addEventListener('click', function() {
+  voteCounter(leftie);
+  removeImages();
+  restoreRandoms();
+  populate();
+  });
+document.getElementById('boxCenter').addEventListener('click', function() {
+  voteCounter(central);
+  removeImages();
+  restoreRandoms();
+  populate();
+});
+document.getElementById('boxRight').addEventListener('click', function() {
+  voteCounter(rightie);
+  removeImages();
+  restoreRandoms();
+  populate();
+});
 
 window.onload= function() {
+makeCopy();
 populate();
 chart = new CanvasJS.Chart("chartContainer", {
     title: {text: "Clicks Per Photo"},
@@ -114,24 +152,9 @@ chart = new CanvasJS.Chart("chartContainer", {
    chart.render();
 }
 
-//Button functions
-  document.getElementById('boxLeft').addEventListener('click', function() {
-    voteCounter(products[leftie]);
-    removeImages();
-    populate();
-  });
-  document.getElementById('boxCenter').addEventListener('click', function() {
-    voteCounter(products[central]);
-    removeImages();
-    populate();
-  });
-  document.getElementById('boxRight').addEventListener('click', function() {
-    voteCounter(products[rightie]);
-    removeImages();
-    populate();
-  });
 
-  function chartChange() {
+
+function chartChange() {
   products[11].y++;
   chart.render();
 }
