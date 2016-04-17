@@ -4,6 +4,8 @@ var Product = function(product_name, photo, product_description) {
   this.photo = photo;
   this.productDescription = product_description;
   this.y = 0;
+  this.old = 0;
+  this.master = 0;
 };
 
 //Builds populate products array
@@ -31,6 +33,44 @@ var productsCopy = [];
 //Creates an object to collect total vote counts
 var surveyTotals = 0;
 
+//Creates a canvas bar chart
+function makeChart() {
+  var chart = new CanvasJS.Chart("chartContainer", {
+    theme: "theme2",
+    title:{text: "Market Survey Results"},
+    animationEnabled: false,
+    axisX:{interval: 1},
+    axisY:{interval: 5},
+    data: [{ type: "bar", dataPoints: products }]
+  });
+  chart.render();
+}
+
+//Can remove chart
+function removeChart() {
+  var parent = document.getElementById('chartContainer');
+  while (parent.firstChild) {
+  parent.removeChild(parent.firstChild);
+  }
+}
+
+//Can remove votes
+function removeValue(object) {
+  object.y = 0
+}
+
+//Can add all votes to master
+function removeVotes() {
+  for(i=0; i < products.length; i++) {
+    removeValue(products[i]);
+  }
+}
+
+//Can remove surveyTotals
+function removeSurvey() {
+  surveyTotals = 0
+}
+
 //Can populate the productsCopy array
 function makeCopy() {
   for (i=0; i< products.length; i++) {
@@ -49,7 +89,27 @@ function makeAgreeButton() {
     populate();
     createProgressSpace();
     createProgressBar();
+    makeChart();
     removeAgreeButton();
+  });
+}
+
+//Can create an "start over" button
+function makeStartOverButton() {
+  var agreeButton = document.createElement('button');
+  var agreeText = document.createTextNode ("Start Over");
+  agreeButton.appendChild(agreeText);
+  document.getElementById("buttonSpace").appendChild(agreeButton);
+  agreeButton.addEventListener('click', function() {
+    //cleanArray(products[i]);
+    removeProgressBar();
+    removeProgressSpace();
+    removeList();
+    removeChart();
+    removeVotes();
+    removeSurvey();
+    makeAgreeButton();
+
   });
 }
 
@@ -76,6 +136,7 @@ function playGame() {
 
   }
   else {
+    makeChart();
     populate();
   }
 }
@@ -85,9 +146,10 @@ function endGame() {
   var elSectionTitle = document.getElementById('sectionTitle');
   elSectionTitle.innerHTML = 'Thank You!'
   var elInstruction = document.getElementById('instruction');
-  elInstruction.innerHTML = 'Your input is greatly appreciated, fleshy one! Now go away.'
+  elInstruction.innerHTML = 'Your input is greatly appreciated, fleshy one. Try again!'
   createList();
   addAll();
+  makeStartOverButton();
 }
 
 //Can create random numbers based on an array's length
@@ -99,10 +161,11 @@ function getRandom(array) {
 function voteCounter(object) {
   var addVote = object.y++;
   var addMeToo = surveyTotals++;
+  var addMeThree = object.master++;
 };
 
 //Can create list
-function createList () {
+function createList() {
   var header = document.createElement('h2');
   header.setAttribute('id', 'productHeader');
   var headerText = document.createTextNode ("Your Results");
@@ -113,6 +176,13 @@ function createList () {
   document.getElementById("buttonSpace").appendChild(proli);
 }
 
+//Can remove list
+function removeList() {
+  var parent = document.getElementById('buttonSpace');
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
+}
 
 //Can create progress space
 function createProgressSpace () {
@@ -131,6 +201,22 @@ function createProgressBar () {
   var progBar = document.createElement('div');
   progBar.setAttribute('id', 'progressBar');
   document.getElementById("progressSpace").appendChild(progBar);
+}
+
+//Can remove progress space
+function removeProgressSpace() {
+  var parent = document.getElementById('progressContainer');
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
+}
+
+//Can remove progress bar
+function removeProgressBar() {
+  var parent = document.getElementById('progressSpace');
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
 }
 
 //Can add a list item
@@ -310,5 +396,5 @@ document.getElementById('boxRight').addEventListener('click', function() {
 window.onload= function() {
   makeCopy();
   makeAgreeButton();
-  //populate();
+
 }
