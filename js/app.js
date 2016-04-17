@@ -31,20 +31,33 @@ var productsCopy = [];
 //Creates an object to collect total vote counts
 var surveyTotals = 0;
 
-//Creates a canvas bar chart
-var chart = new CanvasJS.Chart("chartContainer", {
-  theme: "theme2",
-  title:{text: "Market Survey Results"},
-  animationEnabled: true,
-  axisX:{interval: 1},
-  axisY:{interval: 1},
-  data: [{ type: "bar", dataPoints: products }]
-});
-
 //Can populate the productsCopy array
 function makeCopy() {
   for (i=0; i< products.length; i++) {
     productsCopy.push(products[i]);
+  }
+}
+
+//Can create an "agree" button
+function makeAgreeButton() {
+  var agreeButton = document.createElement('button');
+  var agreeText = document.createTextNode ("Agree");
+  agreeButton.appendChild(agreeText);
+  document.getElementById("buttonSpace").appendChild(agreeButton);
+  agreeButton.addEventListener('click', function() {
+    document.getElementById("instruction").innerHTML = "Click on the GoFundYourself product that interests you the most."
+    populate();
+    createProgressSpace();
+    createProgressBar();
+    removeAgreeButton();
+  });
+}
+
+//Can remove "agree" button
+function removeAgreeButton() {
+  var parent = document.getElementById('buttonSpace');
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
   }
 }
 
@@ -57,7 +70,6 @@ function refill() {
 
 //Can stop the game at 15 votes
 function playGame() {
-  chart.render();
   if (surveyTotals == 15) {
     endGame();
     //chart.render();
@@ -74,6 +86,8 @@ function endGame() {
   elSectionTitle.innerHTML = 'Thank You!'
   var elInstruction = document.getElementById('instruction');
   elInstruction.innerHTML = 'Your input is greatly appreciated, fleshy one! Now go away.'
+  createList();
+  addAll();
 }
 
 //Can create random numbers based on an array's length
@@ -87,6 +101,112 @@ function voteCounter(object) {
   var addMeToo = surveyTotals++;
 };
 
+//Can create list
+function createList () {
+  var header = document.createElement('h2');
+  header.setAttribute('id', 'productHeader');
+  var headerText = document.createTextNode ("Your Results");
+  header.appendChild(headerText);
+  document.getElementById("buttonSpace").appendChild(header);
+  var proli = document.createElement('ul');
+  proli.setAttribute('id', 'productList');
+  document.getElementById("buttonSpace").appendChild(proli);
+}
+
+
+//Can create progress space
+function createProgressSpace () {
+  var header = document.createElement('h2');
+  header.setAttribute('id', 'progressHeader');
+  var headerText = document.createTextNode ("Your Progress");
+  header.appendChild(headerText);
+  document.getElementById("progressContainer").appendChild(header);
+  var progSpace = document.createElement('div');
+  progSpace.setAttribute('id', 'progressSpace');
+  document.getElementById("progressContainer").appendChild(progSpace);
+}
+
+//Can create progress bar
+function createProgressBar () {
+  var progBar = document.createElement('div');
+  progBar.setAttribute('id', 'progressBar');
+  document.getElementById("progressSpace").appendChild(progBar);
+}
+
+//Can add a list item
+function addLi(product) {
+  var listItem = document.createElement('li');
+  var listItemText = document.createTextNode (product.label+ ": " +product.y+" votes");
+  listItem.appendChild(listItemText);
+  document.getElementById('productList').appendChild(listItem);
+}
+
+//Can add all list items as defined by addli
+function addAll() {
+  for(i=0; i < products.length; i++) {
+    addLi(products[i]);
+  }
+}
+
+//Can animate the progress bar
+var width = 1;
+function moveBar() {
+  var elem = document.getElementById("progressBar");
+  //var width = 1;
+  var id = setInterval(frame, 10);
+  function frame() {
+    if (width >= 100) {
+      clearInterval(id);
+      width++
+    } else if (width == 93){
+      clearInterval(id);
+      width++
+    } else if (width == 87){
+      clearInterval(id);
+      width++
+    } else if (width == 80){
+      clearInterval(id);
+      width++
+    } else if (width == 73){
+      clearInterval(id);
+      width++
+    } else if (width == 67){
+      clearInterval(id);
+      width++
+    } else if (width == 60){
+      clearInterval(id);
+      width++
+    } else if (width == 53){
+      clearInterval(id);
+      width++
+    } else if (width == 47){
+      clearInterval(id);
+      width++
+    } else if (width == 40){
+      clearInterval(id);
+      width++
+    } else if (width == 33){
+      clearInterval(id);
+      width++
+    } else if (width == 27){
+      clearInterval(id);
+      width++
+    } else if (width == 20){
+      clearInterval(id);
+      width++
+    } else if (width == 13){
+      clearInterval(id);
+      width++
+    } else if (width == 7){
+      clearInterval(id);
+      width++
+    } else {
+      width++;
+      elem.style.width = width + '%';
+    }
+  }
+}
+
 //Can splice an array based on the random number generator, separated to reduce redundancy
 function splicer(array) {
   refill();
@@ -94,18 +214,16 @@ function splicer(array) {
   var arrayObject = array.splice(randomNumber, 1)[0];
   return arrayObject;
 }
-
 function splicer2(array) {
   refill();
   var randomNumber = getRandom(array);
-  var arrayObject = array.splice(randomNumber, 2)[0];
+  var arrayObject = array.splice(randomNumber, 1)[0];
   return arrayObject;
 }
-
 function splicer3(array) {
   refill();
   var randomNumber = getRandom(array);
-  var arrayObject = array.splice(randomNumber, 3)[0];
+  var arrayObject = array.splice(randomNumber, 1)[0];
   return arrayObject;
 }
 
@@ -166,34 +284,24 @@ function restoreRandoms() {
   rightie = splicer3(productsCopy);
 }
 
-//render the chart
-/*function renderChart() {
-  var chart = new CanvasJS.Chart("chartContainer", {
-    theme: "theme1",
-    title:{text: "Market Survey Results"},
-    animationEnabled: true,
-    axisX:{interval: 1},
-    axisY:{interval: 1},
-		data: [{ type: "bar", dataPoints: products }]
-	});
-	chart.render();
-}*/
-
 //Button functions
 document.getElementById('boxLeft').addEventListener('click', function() {
   voteCounter(leftie);
+  moveBar();
   removeImages();
   restoreRandoms();
   playGame();
   });
 document.getElementById('boxCenter').addEventListener('click', function() {
   voteCounter(central);
+  moveBar();
   removeImages();
   restoreRandoms();
   playGame();
 });
 document.getElementById('boxRight').addEventListener('click', function() {
   voteCounter(rightie);
+  moveBar();
   removeImages();
   restoreRandoms();
   playGame();
@@ -201,6 +309,6 @@ document.getElementById('boxRight').addEventListener('click', function() {
 
 window.onload= function() {
   makeCopy();
-  populate();
-  //renderChart();
+  makeAgreeButton();
+  //populate();
 }

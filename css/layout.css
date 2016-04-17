@@ -1,13 +1,14 @@
 div.title {text-align: center;}
-#chartContainer {height: 300px; width: 100%;}
 #begin {text-align: center;}
 #start {display: block; margin: 0 auto;}
 #agree {display: block; margin: 0 auto;}
-#leftImage {width: 100%;}
-#centerImage {width: 100%;}
-#rightImage {width: 100%;}
+#leftImage {max-width: 464px; max-height: 322px; }
+#centerImage {max-width: 464px; max-height: 322px; }
+#rightImage {max-width: 464px; max-height: 322px; }
 div.spacer {height: 20px; margin-left: -8px; margin-right: -8px;}
 #imageSpace {margin: 0 auto; position: relative; text-align: center;}
-/*img.product {max-height: 300px; max-width: auto;}*/
-div.imageBox { display: inline-flex; width: 30%; max-height: 320px; justify-content: center; margin-left: 5px; margin-right: 5px; overflow: hidden;}
-/*img.product {max-height: 300px; max-width: auto;}*/
+#buttonSpace {margin: 0 auto; position: relative; text-align: center;}
+#productHeader {text-align: center;}
+div.imageBox {display: inline-flex; justify-content: center; margin-left: 5px; margin-right: 5px; overflow: hidden;}
+#progressSpace {position: relative; width: 100%; height: 30px; background-color: grey;}
+#progressBar {position: absolute; width: 1%; height: 100%; background-color: green;}
