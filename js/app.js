@@ -27,6 +27,13 @@ products.push(squidUsb = new Product('USB Tentacle', 'img/squid_usb.jpg', 'tbd')
 products.push(unicornMeat = new Product('Unicorn Meat', 'img/unicorn_meat.jpg', 'tbd'));
 products.push(waterCan = new Product('Watering Can', 'img/water_can.jpg', 'tbd'));
 
+//Local storage for products
+localStorage.setItem('products', JSON.stringify(products));
+var storedArray = JSON.parse(localStorage.getItem('products'));
+console.log(storedArray);
+var removeData = localStorage.removeItem('products');
+console.log(removeData);
+
 //Creates a copy of Products array named productsCopy
 var productsCopy = [];
 
@@ -150,7 +157,7 @@ function endGame() {
   elSectionTitle.innerHTML = 'Thank You!'
   var elInstruction = document.getElementById('instruction');
   elInstruction.innerHTML = 'Your input is greatly appreciated, fleshy one. Try again!'
-  localStorage.setItem('babySwifferStored', JSON.stringify(babySwiffer));
+  //localStorage.setItem('babySwifferStored', JSON.stringify(babySwiffer));
   createList();
   addAll();
   makeStartOverButton();
@@ -398,9 +405,6 @@ document.getElementById('boxRight').addEventListener('click', function() {
 });
 
 window.onload= function() {
-  var x = JSON.parse(localStorage.getItem('babySwifferStored'));
-  console.log(x);
   makeCopy();
   makeAgreeButton();
-
 }
