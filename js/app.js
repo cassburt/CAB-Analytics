@@ -101,7 +101,10 @@ function makeStartOverButton() {
   agreeButton.appendChild(agreeText);
   document.getElementById("buttonSpace").appendChild(agreeButton);
   agreeButton.addEventListener('click', function() {
-    //cleanArray(products[i]);
+    var elSectionTitle = document.getElementById('sectionTitle');
+    elSectionTitle.innerHTML = "What's Your Favorite?"
+    var elInstruction = document.getElementById('instruction');
+    elInstruction.innerHTML = "What's your favorite GoFundYourself idea? Take our survey and find out.<br>Click the 'Agree' button below to begin the survey. Pictures of three GoFundYourself products will appear. <br>Click on the image of the GoFundYourself product that interests you the most.<br>Complete all 15 questions for a chance to win up to $5,000 in GoFundYourself seed money!!</p>"
     removeProgressBar();
     removeProgressSpace();
     removeList();
