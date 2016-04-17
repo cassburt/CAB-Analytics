@@ -150,6 +150,7 @@ function endGame() {
   elSectionTitle.innerHTML = 'Thank You!'
   var elInstruction = document.getElementById('instruction');
   elInstruction.innerHTML = 'Your input is greatly appreciated, fleshy one. Try again!'
+  localStorage.setItem('babySwifferStored', JSON.stringify(babySwiffer));
   createList();
   addAll();
   makeStartOverButton();
@@ -397,6 +398,8 @@ document.getElementById('boxRight').addEventListener('click', function() {
 });
 
 window.onload= function() {
+  var x = JSON.parse(localStorage.getItem('babySwifferStored'));
+  console.log(x);
   makeCopy();
   makeAgreeButton();
 
