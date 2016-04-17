@@ -27,7 +27,7 @@ products.push(squidUsb = new Product('USB Tentacle', 'img/squid_usb.jpg', 'tbd')
 products.push(unicornMeat = new Product('Unicorn Meat', 'img/unicorn_meat.jpg', 'tbd'));
 products.push(waterCan = new Product('Watering Can', 'img/water_can.jpg', 'tbd'));
 
-//Local storage for products
+//Local storage for products - this needs work!
 localStorage.setItem('products', JSON.stringify(products));
 var storedArray = JSON.parse(localStorage.getItem('products'));
 console.log(storedArray);
@@ -40,6 +40,8 @@ var productsCopy = [];
 //Creates an object to collect total vote counts
 var surveyTotals = 0;
 
+//MAKE FUNCTIONS
+
 //Creates a canvas bar chart
 function makeChart() {
   var chart = new CanvasJS.Chart("chartContainer", {
@@ -51,31 +53,6 @@ function makeChart() {
     data: [{ type: "bar", dataPoints: products }]
   });
   chart.render();
-}
-
-//Can remove chart
-function removeChart() {
-  var parent = document.getElementById('chartContainer');
-  while (parent.firstChild) {
-  parent.removeChild(parent.firstChild);
-  }
-}
-
-//Can remove votes
-function removeValue(object) {
-  object.y = 0
-}
-
-//Can add all votes to master
-function removeVotes() {
-  for(i=0; i < products.length; i++) {
-    removeValue(products[i]);
-  }
-}
-
-//Can remove surveyTotals
-function removeSurvey() {
-  surveyTotals = 0
 }
 
 //Can populate the productsCopy array
@@ -114,85 +91,12 @@ function makeStartOverButton() {
     elInstruction.innerHTML = "What's your favorite GoFundYourself idea? Take our survey and find out.<br>Click the 'Agree' button below to begin the survey. Pictures of three GoFundYourself products will appear. <br>Click on the image of the GoFundYourself product that interests you the most.<br>Complete all 15 questions for a chance to win up to $5,000 in GoFundYourself seed money!!</p>"
     removeProgressBar();
     removeProgressSpace();
-    removeList();
     removeChart();
     removeVotes();
     removeSurvey();
+    removeStartOverButton();
     makeAgreeButton();
-
   });
-}
-
-//Can remove "agree" button
-function removeAgreeButton() {
-  var parent = document.getElementById('buttonSpace');
-  while (parent.firstChild) {
-    parent.removeChild(parent.firstChild);
-  }
-}
-
-//Can refill the productsCopy array IF it is empty
-function refill() {
-    if (productsCopy.length == 0) {
-     makeCopy();
-    }
-  }
-
-//Can stop the game at 15 votes
-function playGame() {
-  if (surveyTotals == 15) {
-    endGame();
-    //chart.render();
-
-  }
-  else {
-    makeChart();
-    populate();
-  }
-}
-
-//Can display the end message
-function endGame() {
-  var elSectionTitle = document.getElementById('sectionTitle');
-  elSectionTitle.innerHTML = 'Thank You!'
-  var elInstruction = document.getElementById('instruction');
-  elInstruction.innerHTML = 'Your input is greatly appreciated, fleshy one. Try again!'
-  //localStorage.setItem('babySwifferStored', JSON.stringify(babySwiffer));
-  createList();
-  addAll();
-  makeStartOverButton();
-}
-
-//Can create random numbers based on an array's length
-function getRandom(array) {
-  return Math.floor(Math.random()* array.length);
-};
-
-//Can add a vote to an array object, property "voteCount"
-function voteCounter(object) {
-  var addVote = object.y++;
-  var addMeToo = surveyTotals++;
-  var addMeThree = object.master++;
-};
-
-//Can create list
-function createList() {
-  var header = document.createElement('h2');
-  header.setAttribute('id', 'productHeader');
-  var headerText = document.createTextNode ("Your Results");
-  header.appendChild(headerText);
-  document.getElementById("buttonSpace").appendChild(header);
-  var proli = document.createElement('ul');
-  proli.setAttribute('id', 'productList');
-  document.getElementById("buttonSpace").appendChild(proli);
-}
-
-//Can remove list
-function removeList() {
-  var parent = document.getElementById('buttonSpace');
-  while (parent.firstChild) {
-    parent.removeChild(parent.firstChild);
-  }
 }
 
 //Can create progress space
@@ -214,6 +118,49 @@ function createProgressBar () {
   document.getElementById("progressSpace").appendChild(progBar);
 }
 
+//REMOVE FUNCIONS
+
+//Can remove chart
+function removeChart() {
+  var parent = document.getElementById('chartContainer');
+  while (parent.firstChild) {
+  parent.removeChild(parent.firstChild);
+  }
+}
+
+//Can remove votes
+function removeValue(object) {
+  object.y = 0
+}
+
+//Can add all votes to master
+function removeVotes() {
+  for(i=0; i < products.length; i++) {
+    removeValue(products[i]);
+  }
+}
+
+//Can remove surveyTotals
+function removeSurvey() {
+  surveyTotals = 0
+}
+
+//Can remove "start over" button
+function removeStartOverButton() {
+  var parent = document.getElementById('buttonSpace');
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
+}
+
+//Can remove "agree" button
+function removeAgreeButton() {
+  var parent = document.getElementById('buttonSpace');
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
+}
+
 //Can remove progress space
 function removeProgressSpace() {
   var parent = document.getElementById('progressContainer');
@@ -230,26 +177,66 @@ function removeProgressBar() {
   }
 }
 
-//Can add a list item
-function addLi(product) {
-  var listItem = document.createElement('li');
-  var listItemText = document.createTextNode (product.label+ ": " +product.y+" votes");
-  listItem.appendChild(listItemText);
-  document.getElementById('productList').appendChild(listItem);
+//Can remove Images
+function removeImages() {
+  var parent = document.getElementById('boxLeft');
+  var child = document.getElementById('leftImage');
+  parent.removeChild(child);
+
+  var parent = document.getElementById('boxCenter');
+  var child = document.getElementById('centerImage');
+  parent.removeChild(child);
+
+  var parent = document.getElementById('boxRight');
+  var child = document.getElementById('rightImage');
+  parent.removeChild(child);
 }
 
-//Can add all list items as defined by addli
-function addAll() {
-  for(i=0; i < products.length; i++) {
-    addLi(products[i]);
+//OTHER FUNCTIONS
+
+//Can refill the productsCopy array IF it is empty
+function refill() {
+    if (productsCopy.length == 0) {
+     makeCopy();
+    }
+  }
+
+//Can stop the game at 15 votes
+function playGame() {
+  if (surveyTotals == 15) {
+    endGame();
+  }
+  else {
+    makeChart();
+    populate();
   }
 }
+
+//Can display the end message
+function endGame() {
+  var elSectionTitle = document.getElementById('sectionTitle');
+  elSectionTitle.innerHTML = 'Thank You!'
+  var elInstruction = document.getElementById('instruction');
+  elInstruction.innerHTML = 'Your input is greatly appreciated, fleshy one. Try again!'
+  makeStartOverButton();
+}
+
+//Can create random numbers based on an array's length
+function getRandom(array) {
+  return Math.floor(Math.random()* array.length);
+};
+
+//Can add a vote to an array object, property "voteCount"
+function voteCounter(object) {
+  var addVote = object.y++;
+  var addMeToo = surveyTotals++;
+  var addMeThree = object.master++;
+};
 
 //Can animate the progress bar
 var width = 1;
 function moveBar() {
   var elem = document.getElementById("progressBar");
-  //var width = 1;
   var id = setInterval(frame, 10);
   function frame() {
     if (width >= 100) {
@@ -356,22 +343,6 @@ function populate() {
   var node = document.createTextNode;
   var element = document.getElementById('boxRight');
     element.appendChild(rightButton);
-}
-
-//Can remove Images
-function removeImages() {
-  var parent = document.getElementById('boxLeft');
-  var child = document.getElementById('leftImage');
-  parent.removeChild(child);
-
-  var parent = document.getElementById('boxCenter');
-  var child = document.getElementById('centerImage');
-  parent.removeChild(child);
-
-  var parent = document.getElementById('boxRight');
-  var child = document.getElementById('rightImage');
-  parent.removeChild(child);
-
 }
 
 //Can restore the random numbers
