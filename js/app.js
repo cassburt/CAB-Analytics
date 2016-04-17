@@ -1,10 +1,10 @@
 //Builds objecct constructor
 var Product = function(product_name, photo, product_description) {
-  this.productName = product_name;
+  this.label = product_name;
   this.photo = photo;
   this.productDescription = product_description;
-  this.voteCount = 0;
-}
+  this.y = 0;
+};
 
 //Builds populate products array
 var products = [];
@@ -20,16 +20,26 @@ products.push(dragonMeat = new Product('Dragon Meat', 'img/dragon_meat.jpg', 'tb
 products.push(penCutlery = new Product('Pen Cutlery', 'img/pen_cutlery.jpg', 'tbd'));
 products.push(pizzaScissors = new Product('Pizza Scissors', 'img/pizza_scissors.jpg', 'tbd'));
 products.push(r2d2Bag = new Product('R2D2 Bag', 'img/r2d2_bag.jpg', 'tbd'));
-products.push(sharkSleepingBag = new Product('Shark Sleeping Bag', 'img/shark_sleeping_bag.jpg', 'tbd'));
-products.push(squidUsb = new Product('Squid USB', 'img/squid_usb.jpg', 'tbd'));
+products.push(sharkSleepingBag = new Product('Sleeping Bag', 'img/shark_sleeping_bag.jpg', 'tbd'));
+products.push(squidUsb = new Product('USB Tentacle', 'img/squid_usb.jpg', 'tbd'));
 products.push(unicornMeat = new Product('Unicorn Meat', 'img/unicorn_meat.jpg', 'tbd'));
-products.push(waterCan = new Product('Water Can', 'img/water_can.jpg', 'tbd'));
+products.push(waterCan = new Product('Watering Can', 'img/water_can.jpg', 'tbd'));
 
 //Creates a copy of Products array named productsCopy
 var productsCopy = [];
 
 //Creates an object to collect total vote counts
 var surveyTotals = 0;
+
+//Creates a canvas bar chart
+var chart = new CanvasJS.Chart("chartContainer", {
+  theme: "theme2",
+  title:{text: "Market Survey Results"},
+  animationEnabled: true,
+  axisX:{interval: 1},
+  axisY:{interval: 1},
+  data: [{ type: "bar", dataPoints: products }]
+});
 
 //Can populate the productsCopy array
 function makeCopy() {
@@ -47,8 +57,11 @@ function refill() {
 
 //Can stop the game at 15 votes
 function playGame() {
+  chart.render();
   if (surveyTotals == 15) {
     endGame();
+    //chart.render();
+
   }
   else {
     populate();
@@ -70,11 +83,11 @@ function getRandom(array) {
 
 //Can add a vote to an array object, property "voteCount"
 function voteCounter(object) {
-  var addVote = object.voteCount++;
+  var addVote = object.y++;
   var addMeToo = surveyTotals++;
 };
 
-//Can splice an array based on the random number generator
+//Can splice an array based on the random number generator, separated to reduce redundancy
 function splicer(array) {
   refill();
   var randomNumber = getRandom(array);
@@ -82,10 +95,24 @@ function splicer(array) {
   return arrayObject;
 }
 
+function splicer2(array) {
+  refill();
+  var randomNumber = getRandom(array);
+  var arrayObject = array.splice(randomNumber, 2)[0];
+  return arrayObject;
+}
+
+function splicer3(array) {
+  refill();
+  var randomNumber = getRandom(array);
+  var arrayObject = array.splice(randomNumber, 3)[0];
+  return arrayObject;
+}
+
 //Generates random number variables
 var leftie = splicer(productsCopy);
-var central = splicer(productsCopy);
-var rightie = splicer(productsCopy);
+var central = splicer2(productsCopy);
+var rightie = splicer3(productsCopy);
 
 //Can populate the webpage
 function populate() {
@@ -135,9 +162,22 @@ function removeImages() {
 //Can restore the random numbers
 function restoreRandoms() {
   leftie = splicer(productsCopy);
-  central = splicer(productsCopy);
-  rightie = splicer(productsCopy);
+  central = splicer2(productsCopy);
+  rightie = splicer3(productsCopy);
 }
+
+//render the chart
+/*function renderChart() {
+  var chart = new CanvasJS.Chart("chartContainer", {
+    theme: "theme1",
+    title:{text: "Market Survey Results"},
+    animationEnabled: true,
+    axisX:{interval: 1},
+    axisY:{interval: 1},
+		data: [{ type: "bar", dataPoints: products }]
+	});
+	chart.render();
+}*/
 
 //Button functions
 document.getElementById('boxLeft').addEventListener('click', function() {
@@ -160,23 +200,7 @@ document.getElementById('boxRight').addEventListener('click', function() {
 });
 
 window.onload= function() {
-makeCopy();
-populate();
-chart = new CanvasJS.Chart("chartContainer", {
-    title: {text: "Clicks Per Photo"},
-    data: [
-            {
-             type: "bar",
-             dataPoints: products
-            }
-          ]
-   });
-   chart.render();
-}
-
-
-
-function chartChange() {
-  products[11].y++;
-  chart.render();
+  makeCopy();
+  populate();
+  //renderChart();
 }
