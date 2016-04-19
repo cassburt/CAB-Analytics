@@ -27,12 +27,12 @@ products.push(squidUsb = new Product('USB Tentacle', 'img/squid_usb.jpg', 'tbd')
 products.push(unicornMeat = new Product('Unicorn Meat', 'img/unicorn_meat.jpg', 'tbd'));
 products.push(waterCan = new Product('Watering Can', 'img/water_can.jpg', 'tbd'));
 
-//Local storage for products - this needs work!
-localStorage.setItem('products', JSON.stringify(products));
+//Can store choices
+function storeChoice() {
+  localStorage.setItem('products', JSON.stringify(products));
+}
 var storedArray = JSON.parse(localStorage.getItem('products'));
 console.log(storedArray);
-var removeData = localStorage.removeItem('products');
-console.log(removeData);
 
 //Creates a copy of Products array named productsCopy
 var productsCopy = [];
@@ -65,6 +65,8 @@ function makeCopy() {
 //Can create an "agree" button
 function makeAgreeButton() {
   var agreeButton = document.createElement('button');
+  agreeButton.setAttribute('class', 'round');
+  agreeButton.setAttribute('id', 'agree');
   var agreeText = document.createTextNode ("Agree");
   agreeButton.appendChild(agreeText);
   document.getElementById("buttonSpace").appendChild(agreeButton);
@@ -81,6 +83,7 @@ function makeAgreeButton() {
 //Can create an "start over" button
 function makeStartOverButton() {
   var agreeButton = document.createElement('button');
+  agreeButton.setAttribute('class', 'round');
   var agreeText = document.createTextNode ("Start Over");
   agreeButton.appendChild(agreeText);
   document.getElementById("buttonSpace").appendChild(agreeButton);
@@ -355,6 +358,7 @@ function restoreRandoms() {
 //Button functions
 document.getElementById('boxLeft').addEventListener('click', function() {
   voteCounter(leftie);
+  storeChoice();
   moveBar();
   removeImages();
   restoreRandoms();
@@ -362,6 +366,7 @@ document.getElementById('boxLeft').addEventListener('click', function() {
   });
 document.getElementById('boxCenter').addEventListener('click', function() {
   voteCounter(central);
+  storeChoice();
   moveBar();
   removeImages();
   restoreRandoms();
@@ -369,6 +374,7 @@ document.getElementById('boxCenter').addEventListener('click', function() {
 });
 document.getElementById('boxRight').addEventListener('click', function() {
   voteCounter(rightie);
+  storeChoice();
   moveBar();
   removeImages();
   restoreRandoms();

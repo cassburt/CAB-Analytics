@@ -2,29 +2,44 @@
 <html>
   <head>
     <title>CAB Marketing Analytics</title>
+      <link href='https://fonts.googleapis.com/css?family=Ultra' rel='stylesheet' type='text/css'>
+      <link href='https://fonts.googleapis.com/css?family=Stint+Ultra+Expanded' rel='stylesheet' type='text/css'>
+      <link href='https://fonts.googleapis.com/css?family=Slabo+13px' rel='stylesheet' type='text/css'>
+      <link href='https://fonts.googleapis.com/css?family=Lora:400italic' rel='stylesheet' type='text/css'>
       <link type="text/css" rel="stylesheet" href="css/layout.css"/>
       <link type="text/css" rel="stylesheet" href="css/style.css"/>
   </head>
   <body>
+    <img id = "startup" src="img/startup.jpg" alt="Think Big">
     <div class = "title">
-      <h1>GoFundYourself Survey</h1>
+        <h1 class = "titleBig">Go<span class = "titleSmall">Fund</span>Yourself</h1>
     </div>
-    <div id = "begin">
-        <h2 id = "sectionTitle">What's Your Favorite?</h2>
-          <p id="instruction">What's your favorite GoFundYourself idea? Take our survey and find out.<br>Click the "Agree" button below to begin the survey. Pictures of three GoFundYourself products will appear. <br>Click on the image of the GoFundYourself product that interests you the most.<br>Complete all 15 questions for a chance to win up to $5,000 in GoFundYourself seed money!!</p>
+    <div class = "stripe"></div>
+    <div class= "quote fade-in2 inspire">
+      <p>"As a startup CEO, I slept like a baby. I woke up every two hours and cried."</p>
+      <p class = attribution>- Ben Horowitz</p>
     </div>
-    <div id="buttonSpace">
+    <div class = "learnMorePoint fade-in clicker">
+        <button class="round" id="push"><a href="#theEnd">Learn More</a></button>
     </div>
-    <div id = "imageSpace">
-      <div class = "imageBox" id= "boxLeft"></div>
-      <div class = "imageBox" id= "boxCenter"></div>
-      <div class = "imageBox" id= "boxRight"></div>
-    </div>
-    <p> </p>
-    <div id= "progressContainer"></div>
-      <div id = "chartContainer" style="height: 300px; width: 100%;"></div>
+
+        <div class = "begin" id="survey">
+          <h2 id = "sectionTitle">What's Your Favorite?</h2>
+          <p id="instruction">What's your favorite GoFundYourself idea? Take our survey and find out. Click the "Agree" button below to begin the survey. Pictures of three GoFundYourself products will appear. Click on the image of the GoFundYourself product that interests you the most.Complete all 15 questions for a chance to win up to $5,000 in GoFundYourself seed money!!</p>
+        </div>
+        <div class = "startPoint" id="buttonSpace"></div>
+        <div id = "imageSpace">
+          <div class = "imageBox" id= "boxLeft"></div>
+          <div class = "imageBox" id= "boxCenter"></div>
+          <div class = "imageBox" id= "boxRight"></div>
+        </div>
+        <p> </p>
+        <div id= "progressContainer"></div>
+        <div id = "chartContainer" style="height: 300px; width: 100%;"></div>
+      <div class = "startup">
+      </div>
+      <div id= "theEnd"></div>
     <script type="text/javascript" src="js/canvasjs.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
-
   </body>
 </html>

@@ -1,4 +1,94 @@
+a{color: white; text-decoration: none;}
+.title {position: relative; margin-left: 8px; margin-top: -40px;}
+  h1.titleBig {font-size: 4.5vw; font-family: 'Ultra', serif; position: relative;}
+  span.titleSmall{font-size: 9vw; font-family: 'Stint Ultra Expanded', cursive;}
+.stripe{position: relative; margin-left: -8px; margin-right: -20px; margin-top: -4%; height: 1vw; width: 60vw; background-color: #003366;}
+.quote {position: relative; background-color: #ffffff; opacity: .65; padding: 15px; -webkit-border-radius: 50px;
+-moz-border-radius: 50px;border-radius: 50px; width: 50vw; margin-left: 3vw; margin-top: 2%; font-size: 2vw; font-family: 'Lora', serif;}
+.attribution {text-align: center; font-family: 'Stint Ultra Expanded', cursive;}
+.learnMorePoint {position: relative; width: 50vw; margin-left: 5vw; margin-top: -6%; font-family: 'Stint Ultra Expanded', cursive;}
+.begin {position: relative; margin-top: 30%; margin-left: 10%; margin-right: 10%; font-size: 32px; text-align: center;}
+.startPoint{width: 12%; margin: auto;}
+#startup {position: absolute; margin-left: -8px; margin-right: -8px; margin-top: -24px; width: 100%;}
+#sectionTitle {font-size: 4.5vw; font-family: 'Ultra', serif; position: relative;}
+#instruction {font-size: 1.5vw; font-family: 'Slabo 13px', serif;}
 #productList {list-style-type: none;}
 #progressHeader {text-align: center;}
-body { background-color: #B4D8E7;}
 #progressSpace {background-color: #48565c;}
+
+.round{
+width:12vw; /*same as the height*/
+height:12vw; /*same as the width*/
+background-color:#003366;
+border:1px solid #003366; /*same colour as the background*/
+color:#fff;
+font-size:2vw; font-family: 'Ultra', serif;
+/*set the border-radius at half the size of the width and height*/
+-webkit-border-radius: 6vw;
+-moz-border-radius: 6vw;
+border-radius: 6vw;
+/*give the button a small drop shadow*/
+-webkit-box-shadow: 0 0 10px rgba(0,0,0, .75);
+-moz-box-shadow: 0 0 10px rgba(0,0,0, .75);
+box-shadow: 2px 2px 15px rgba(0,0,0, .75);
+}
+/***NOW STYLE THE BUTTON'S HOVER STATE***/
+.round:hover{
+background:#194775;
+border:1px solid #194775;
+/*reduce the size of the shadow to give a pushed effect*/
+-webkit-box-shadow: 0px 0px 5px rgba(0,0,0, .75);
+-moz-box-shadow: 0px 0px 5px rgba(0,0,0, .75);
+box-shadow: 0px 0px 5px rgba(0,0,0, .75);
+}
+
+/* make keyframes that tell the start state and the end state of our object */
+@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+.fade-in {
+  opacity:0;
+  -webkit-animation:fadeIn ease-in 1;
+  -moz-animation:fadeIn ease-in 1;
+  animation:fadeIn ease-in 1;
+
+  -webkit-animation-fill-mode:forwards;
+  -moz-animation-fill-mode:forwards;
+  animation-fill-mode:forwards;
+
+  -webkit-animation-duration:1s;
+  -moz-animation-duration:1s;
+  animation-duration:1s;
+}
+
+.fade-in.clicker {
+  -webkit-animation-delay: 2.7s;
+  -moz-animation-delay: 2.7s;
+  animation-delay: 2.7s;
+}
+
+@-webkit-keyframes fadeIn2 { from { opacity:0; } to { opacity:.5; } }
+@-moz-keyframes fadeIn2 { from { opacity:0; } to { opacity:.5; } }
+@keyframes fadeIn2 { from { opacity:0; } to { opacity:.5; } }
+
+.fade-in2 {
+  opacity:0;
+  -webkit-animation:fadeIn2 ease-in 1;
+  -moz-animation:fadeIn2 ease-in 1;
+  animation:fadeIn2 ease-in 1;
+
+  -webkit-animation-fill-mode:forwards;
+  -moz-animation-fill-mode:forwards;
+  animation-fill-mode:forwards;
+
+  -webkit-animation-duration:1s;
+  -moz-animation-duration:1s;
+  animation-duration:1s;
+}
+
+.fade-in2.inspire {
+  -webkit-animation-delay: .5s;
+  -moz-animation-delay:.5s;
+  animation-delay: .5s;
+}
